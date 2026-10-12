@@ -134,7 +134,7 @@
                                 <rule>
                                     <element>BUNDLE</element>
                                     <excludes>
-                                        <exclude>com.warehouse.api.**</exclude>
+                                        <exclude>com/warehouse/api/**</exclude>
                                     </excludes>
                                     <limits>
                                         <limit>
