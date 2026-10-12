@@ -24,7 +24,7 @@ public class ProductEndpointTest {
         .body(containsString("TONSTAD"), containsString("KALLAX"), containsString("BESTÅ"));
 
     String testProductName = "p-" + shortId();
-    long testProductId =
+    int testProductId =
         given()
             .contentType("application/json")
             .body("{\"name\":\"" + testProductName + "\",\"stock\":1}")
@@ -53,7 +53,7 @@ public class ProductEndpointTest {
   @Test
   public void createsReadsUpdatesAndDeletesProduct() {
     String name = "p-" + shortId().substring(0, 20);
-    long id =
+    int id =
         given()
             .contentType("application/json")
             .body("{\"name\":\"" + name + "\",\"description\":\"test\",\"price\":12.50,\"stock\":4}")

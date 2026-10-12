@@ -59,7 +59,7 @@ class StoreResourceTest {
 
     given()
         .contentType("application/json")
-        .body("{\"name\":\"store-update-" + UUID.randomUUID()
+        .body("{\"name\":\"store-update-" + shortId()
             + "\",\"quantityProductsInStock\":18}")
         .when()
         .put("store/1")
@@ -68,7 +68,7 @@ class StoreResourceTest {
 
     given()
         .contentType("application/json")
-        .body("{\"name\":\"store-patch-" + UUID.randomUUID()
+        .body("{\"name\":\"store-patch-" + shortId()
             + "\",\"quantityProductsInStock\":19}")
         .when()
         .patch("store/1")
@@ -120,7 +120,7 @@ class StoreResourceTest {
         .then()
         .statusCode(404);
 
-    long id =
+    int id =
         given()
             .contentType("application/json")
             .body("{\"name\":\"" + uniqueName() + "\",\"quantityProductsInStock\":1}")
@@ -158,6 +158,10 @@ class StoreResourceTest {
   }
 
   private String uniqueName() {
-    return "s-" + UUID.randomUUID().toString().replace("-", "");
+    return "s-" + shortId();
+  }
+
+  private String shortId() {
+    return UUID.randomUUID().toString().replace("-", "").substring(0, 12);
   }
 }

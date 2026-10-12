@@ -25,9 +25,9 @@ class FulfillmentAssignmentResourceTest {
     assign(1, 3, warehouses.get(3), 409);
     assign(1, 1, warehouses.get(0), 409);
 
-    long product4 = createProduct();
-    long product5 = createProduct();
-    long product6 = createProduct();
+    int product4 = createProduct();
+    int product5 = createProduct();
+    int product6 = createProduct();
     assign(2, 1, warehouses.get(3), 201);
     assign(2, 2, warehouses.get(3), 201);
     assign(2, 3, warehouses.get(3), 201);
@@ -63,7 +63,7 @@ class FulfillmentAssignmentResourceTest {
     return code;
   }
 
-  private long createProduct() {
+  private int createProduct() {
     String name = "bp-" + UUID.randomUUID().toString().replace("-", "");
     return given()
         .contentType("application/json")
@@ -76,7 +76,7 @@ class FulfillmentAssignmentResourceTest {
         .path("id");
   }
 
-  private void assign(long storeId, long productId, String warehouseCode, int statusCode) {
+  private void assign(int storeId, int productId, String warehouseCode, int statusCode) {
     given()
         .contentType("application/json")
         .body("{\"storeId\":" + storeId + ",\"productId\":" + productId
