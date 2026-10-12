@@ -1,0 +1,45 @@
+name: Java CI
+
+on:
+  push:
+  pull_request:
+
+jobs:
+  test:
+    runs-on: ubuntu-latest
+    services:
+      postgres:
+        image: postgres:16
+        env:
+          POSTGRES_DB: quarkus_test
+          POSTGRES_USER: quarkus_test
+          POSTGRES_PASSWORD: quarkus_test
+        ports:
+          - 15432:5432
+        options: >-
+          --health-cmd "pg_isready -U quarkus_test -d quarkus_test"
+          --health-interval 10s
+          --health-timeout 5s
+          --health-retries 5
+    defaults:
+      run:
+        working-directory: java-assignment
+    env:
+      QUARKUS_DATASOURCE_DB_KIND: postgresql
+      QUARKUS_DATASOURCE_USERNAME: quarkus_test
+      QUARKUS_DATASOURCE_PASSWORD: quarkus_test
+      QUARKUS_DATASOURCE_JDBC_URL: jdbc:postgresql://localhost:15432/quarkus_test
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-java@v4
+        with:
+          distribution: temurin
+          java-version: '17'
+          cache: maven
+          cache-dependency-path: java-assignment/pom.xml
+      - name: Install Maven
+        run: |
+          sudo apt-get update
+          sudo apt-get install --yes maven
+      - name: Run tests and enforce coverage
+        run: mvn --batch-mode --no-transfer-progress clean verify
